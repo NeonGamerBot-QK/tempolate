@@ -1,5 +1,6 @@
 # template 
 ```env
-TOKEN="TOKEN HERER"
-PREFIX="THERE PREFIX"
+TOKEN="TOKEN HERE"
+PREFIX="THERE PREFIX",
+PORT="a4digitnumber"
 ```

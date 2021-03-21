@@ -47,110 +47,7 @@ bot.variables({
   10: "null"
 });
 
-bot.readyCommand({
-    channel: "$getVar[channelstatus]",
-    code: `\`Ready on client $userTag[$clientID]\` | Running at \`$packageVersion ( "dbd.js": "^$packageVersion" )\``
-})
 
-bot.interactionCommand({
-name: "nowplaying",
-code: `$author[Now Playing;$replaceText[$replaceText[$checkContains[$songInfo[url];https://youtube.com/watch?v=;https://www.youtube.com/watch?v=];true;$getVar[ytemoji]];false;$getVar[scemoji]]]
-$title[$songInfo[title]]
-$addField[Link;[Invite Me\\]($replaceText[$getBotInvite;permissions=0;permissions=$getVar[permission]])
-[Thumbnail\\]($replaceText[$songInfo[thumbnail];hq720;maxresdefault]);yes]
-$addField[Loop;\`$replaceText[$replaceText[$checkContains[$loopStatus;song;queue];true;on - $loopStatus];false;off]\`;yes]
-$addField[Status;\`$replaceText[$replaceText[$checkCondition[$ping<500];true;$replaceText[$replaceText[$hasPerms[$clientID;managemessages];true;200];false;200 (reaction may not stable)]];false;403] - $replaceText[$replaceText[$replaceText[$getGlobalUserVar[247];0;none];1;OK];2;24/7]\`;yes]
-$addField[Region;\`$serverRegion\`;yes]
-$addField[Song;\`$queueLength\`;yes]
-$addField[ID;\`$replaceText[$replaceText[$checkContains[$songInfo[url];https://youtube.com/watch?v=;https://www.youtube.com/watch?v=];true;$replaceText[$replaceText[$songInfo[url];https://youtube.com/watch?v=;];https://www.youtube.com/watch?v=;]];false;undefined]\`;yes]
-$addField[Ping;\`$pingms\`;yes]
-$addField[Playing;$replaceText[$replaceText[$checkContains[$songInfo[url];https://youtube.com/watch?v=;https://www.youtube.com/watch?v=];true;[YouTube\\](https://www.youtube.com/)];false;[Soundcloud\\](https://soundcloud.com/)];yes]
-$addField[URL;[Video\\]($songInfo[url]);yes] 
-$addField[Volume;\`$volume%\`;yes]
-$addField[Duration;\`$replaceText[$songInfo[duration];0 Seconds (00:00:00);LIVE]\`
-\`$replaceText[$replaceText[$checkCondition[$songInfo[duration]==0 Seconds (00:00:00)];true;LIVE];false;$songInfo[current_duration]]\`;yes]
-$addField[$replaceText[$replaceText[$checkCondition[$songInfo[duration]==0 Seconds (00:00:00)];true;Streaming];false;Uploaded] By;[$songInfo[publisher]\\]($songInfo[publisher_url]);yes]
-$addField[Running At;$replaceText[$replaceText[$checkContains[$platform[$songInfo[userID]];desktop];true;Desktop];false;$replaceText[$replaceText[$checkContains[$status[$songInfo[userID]];online;idle;dnd];true;Mobile];false;null]];yes]
-$addField[Requested By;<@$songInfo[userID]>;yes]
-$footer[Time Remaining: $replaceText[$replaceText[$checkCondition[$songInfo[duration]==0 Seconds (00:00:00)];true;LIVE];false;$songInfo[duration_left]];$getVar[emoji]]
-$addTimestamp
-$thumbnail[$replaceText[$songInfo[thumbnail];hq720;maxresdefault]]
-$color[$getVar[color]]
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]
-$onlyIf[$queueLength!=0;Nothing song was playing.]
-$onlyIf[$voiceID!=;$getVar[errorjoin]]
-$suppressErrors[song not load on queue. $error]`
-})
-
-bot.interactionCommand({
-name: "help",
-code: `$title[Command List]
-$addField[Slash;
-> /nowplaying
-> /help
-> /pause
-> /resume
-> /stop;no]
-$addField[Aliases;
-> join = j, summon
-> disconnect = dc, bye, leave
-> play = p, youtube, yt
-> playskip = ps
-> soundcloud = sc
-> nowplaying = np
-> loop = l
-> shuffle = sf
-> skip = s
-> clearqueue = cq
-> shuffleskip = sfs
-> remove = r
-> qloop = ql
-> queue = q
-> volume = v;no]
-$addField[Developer;> reboot, eval, funcs;no]
-$addField[Misc;> ping, uptime, stats, slash, invite, check, user-info, user, user-disable;no]
-$addField[Control;> playskip, pause, resume, stop, nowplaying, loop, shuffle, stay, shuffleskip, pruning, skip, clearqueue, queue, qloop, seek, remove, volume, filter, playlist-add, playlist-remove, log-on, log-off;no]
-$addField[Music player;> play, spotify, soundcloud, playlist-play;no]
-$addField[Main;> join, disconnect, playlist;no]
-$addTimestamp
-$footer[Ping: $pingms]
-$thumbnail[$userAvatar[$clientID]]
-$color[$getVar[color]]
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]`
-})
-
-bot.interactionCommand({
-name: "pause",
-code: `$pauseSong
-$getVar[pause]
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]
-$onlyIf[$queueLength!=0;Nothing song was playing.]
-$onlyIf[$replaceText[$replaceText[$checkCondition[$getServerVar[userid]==default];true;$authorID];false;$getServerVar[userid]]==$authorID;{title:❌ You cant use this command} {color:$getVar[color]}]
-$onlyIf[$voiceID!=;$getVar[errorjoin]]`
-})
-
-bot.interactionCommand({
-name: "resume",
-code: `$resumeSong
-$getVar[resume]
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]
-$onlyIf[$queueLength!=0;Nothing song was playing.]
-$onlyIf[$replaceText[$replaceText[$checkCondition[$getServerVar[userid]==default];true;$authorID];false;$getServerVar[userid]]==$authorID;{title:❌ You cant use this command} {color:$getVar[color]}]
-$onlyIf[$voiceID!=;$getVar[errorjoin]]`
-})
-
-bot.interactionCommand({
-name: "stop",
-code: `$stopSong
-$sendMessage[$getVar[leavevc];no]
-$sendMessage[$getVar[stop];no]
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]
-$onlyIf[$queueLength!=0;Nothing song was playing. $djsEval[message.member.voice.channel.leave();]]
-$onlyIf[$replaceText[$replaceText[$checkCondition[$getServerVar[userid]==default];true;$authorID];false;$getServerVar[userid]]==$authorID;{title:❌ You cant use this command} {color:$getVar[color]}]
-$onlyIf[$voiceID!=;$getVar[errorjoin]]
-$suppressErrors`
-})
-bot.onInteractionCreate()
 
 bot.musicStartCommand({
   channel: "$channelID",
@@ -188,7 +85,7 @@ $footer[Leaved VC.]
 $color[$getVar[color]]`
 });
 
-bot.onMessage();
+
 
 bot.awaitedCommand({
 name: "clearqueueyes",
@@ -289,32 +186,10 @@ $onlyIf[$sum[$membersCount[$guildID;online];$membersCount[$guildID;idle];$member
 $suppressErrors[something just happened.]`
 });
 
-bot.command({
-  name: "user",
-  code: `$setServerVar[userid;$mentioned[1]]
-$description[\`$userTag[$mentioned[1]]\` just only can execute command now.]
-$addTimestamp
-$color[$getVar[color]]
-$addCmdReactions[✅]
-$onlyIf[$isBot[$mentioned[1]]!=true;Failed.]
-$onlyIf[$mentioned[1]!=;Failed.]
-$argsCheck[1;Mention someone]
-$onlyPerms[manageserver;Missing Permission, **Manage Server** - User]`
-});
+
 
 bot.command({
-  name: "user-disable",
-  code: `$setServerVar[userid;default]
-$description[Change to default.]
-$color[$getVar[color]]
-$addCmdReactions[✅]
-$addTimestamp
-$onlyIf[$getServerVar[userid]!=default;Already default!]
-$onlyPerms[manageserver;Missing Permission, **Manage Server** - User]`
-});
-
-bot.command({
-  name: "help",
+  name: "help-music",
   code: `$title[Command List]
 $addField[Slash;
 > /nowplaying
@@ -350,53 +225,6 @@ $color[$getVar[color]]
 $setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]`
 });
 
-bot.command({
-  name: "stats",
-  code: `
-$addField[Command;> $commandsCount;yes]
-$addField[Server;> $serverCount;yes]
-$addField[Members;> $allMembersCount;yes]
-$addField[RAM Left;> $sub[$truncate[$maxRam];$truncate[$ram]]MB;yes]
-$addField[RAM;> $truncate[$ram]MB;yes]
-$addField[CPU;> $truncate[$replaceText[$cpu;%;]]%
-> $djsEval[require ('os').cpus()[0\\].model;yes];yes]
-$addField[Is Deafen;> $replaceText[$isDeafened[$clientID];null;false];yes]
-$addField[Is Playing;> $checkCondition[$queueLength!=0];yes]
-$addField[Is Connect;> $checkCondition[$voiceID[$clientID]!=];yes]
-$addField[API;> $numberSeparator[$botPing]ms;yes]
-$addField[WB Ping;> $replaceText[$numberSeparator[$sub[$botPing;$ping]];-;]ms;yes]
-$addField[Ping;> $numberSeparator[$ping]ms;yes]
-$addField[Uptime;> $uptime;no]
-$footer[Ver. $packageVersion;$authorAvatar]
-$thumbnail[$userAvatar[$clientID]]
-$color[$getVar[color]]
-$addTimestamp
-$cacheMembers
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]`
-});
-
-bot.command({
-name: "invite",
-code: `$replaceText[$getBotInvite;permissions=0;permissions=$getVar[permission]]
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]`
-})
-
-bot.command({
-  name: "ping",
-  code: `\`\`\`
-Ping         : $numberSeparator[$ping]ms
-API Ping     : $numberSeparator[$botPing]ms
-WB Ping      : $numberSeparator[$replaceText[$sub[$botPing;$ping];-;]]ms
-Message Ping : $executionTimems
-\`\`\`\
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]`
-});
-
-bot.command({
-  name: "uptime",
-  code: `\`$uptime\`
-$setGlobalUserVar[commanduserused;$sum[$getGlobalUserVar[commanduserused];1]]`
-});
 
 bot.command({
 name: "log-off",
@@ -610,7 +438,7 @@ $onlyIf[$replaceText[$replaceText[$checkCondition[$getServerVar[userid]==default
 });
 
 bot.command({
-  name: "check",
+  name: "check-music",
   code: `$title[Check]
 $description[\`\`\`
 Pause      : $replaceText[$replaceText[$checkCondition[$getVar[pause]!=];true;✅];false;❌]
@@ -785,29 +613,7 @@ $onlyIf[$voiceID!=;$getVar[errorjoin]]
 $suppressErrors[]`
 });
 
-bot.command({
-  name: "reboot",
-  code: `$reboot[server.js] //<- Change this, if was different//
-$wait[500ms]
-$sendMessage[Rebooting.. {edit:200ms:{Turning off..}};no]
-$onlyForIDs[$botOwnerID;]`
-});
 
-bot.command({
-  name: "eval",
-  code: `$eval[$message]
-$onlyForIDs[$botOwnerID;]`
-});
-
-bot.command({
-  name: "funcs",
-  code: `$author[$jsonRequest[https://dbdjs.leref.ga/functions/$noMentionMessage;description;{author:Failed rendering.}]$jsonRequest[https://dbdjs.leref.ga/functions/$noMentionMessage;message]]
-$title[$jsonRequest[https://dbdjs.leref.ga/functions/$noMentionMessage;usage;{title:Failed rendering.}]]
-$color[$getVar[color]]
-$addTimestamp
-$argsCheck[>1;Functions?]
-$onlyForIDs[$botOwnerID;]`
-});
 
 bot.command({
   name: "pruning",
@@ -1031,3 +837,4 @@ $onlyIf[$queueLength!=0;Nothing song was playing.]
 $onlyIf[$voiceID!=;$getVar[errorjoin]]
 $suppressErrors[something just happened.]`
 });
+};
