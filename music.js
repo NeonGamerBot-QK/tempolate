@@ -8,21 +8,7 @@
    Last update: March 15 2021 - 20.43 WIB (GMT +7)
  */
 
-//You can delete it, if already have it//
-const dbd = require("dbd.js")
- 
-const bot = new dbd.Bot({
-token: "TOKEN", 
-prefix: "whatever", //<- Change whatever with your prefix//
-mobile: true
-})
-
-//You can delete it, if already have it//
-bot.status({
-  text: "Music",
-  type: "LISTENING",
-  time: 3
-})
+//You can delete it, if already have it
 
 //Customize Property For Message//
 bot.variables({
@@ -33,9 +19,9 @@ bot.variables({
   remove: "Removed song on {d-amount}.", //Available {d-amount}//
 
   clearsong: "✅ Cleared queue. from **{amount} song** to **0**", //Available {amount}//
-  shuffle: "Shuffle Queue.",
+  shuffle: "Shuffling Queue.",
   errorjoin: "You need to join the voice channel first!",
-  leavevc: "Leaved.",
+  leavevc: "i have left the vc.",
 
   join: "Joined Voice Channel to the {join}.", //Available {join}//
   dc: "Disconnected.",
@@ -47,8 +33,7 @@ bot.variables({
   permission: "11889728",
   userid: "default",
   logmusic: "1",
-  247: "1", //0 = off | 1 = on stay 2 minutes | 2 = stay 24/7//
-  channelstatus: "757831705397559337", //Change to your channel id, to send message when the bot restart.// 
+  247: "1", //0 = off | 1 = on stay 2 minutes | 2 = stay 24/7////Change to your channel id, to send message when the bot restart.// 
   vol: "50", //Default Volume//
 
   customemoji: "💢", //<- You can change it with your emoji.//
