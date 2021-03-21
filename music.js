@@ -1,16 +1,4 @@
-/**
- * Advanced Music Command (dbd.js | ver. 2.2.5)
-   server.js
-
-   If you not install that, do "npm install dbd.js@latest" on your console.
-   Make sure you go to "line 817", to change main file.
-
-   Last update: March 15 2021 - 20.43 WIB (GMT +7)
- */
-
-//You can delete it, if already have it
-
-//Customize Property For Message//
+module.exports = (bot) => {
 bot.variables({
   pause: "⏸️ Paused.",
   resume: "▶️ Resumed!",
