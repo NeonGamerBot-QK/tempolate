@@ -28,3 +28,4 @@ bot.command({
     name: "ping",
     code: `***__Pong__!*** \`$pingms\` api: $botpingms`
 })
+require('./music.js')
