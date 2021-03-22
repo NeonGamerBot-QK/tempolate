@@ -5,5 +5,4 @@ node_modules
 .package-lock.json
 ## yea uh
 database
-json.squlite
 # those are db files automated
