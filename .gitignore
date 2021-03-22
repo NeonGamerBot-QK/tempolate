@@ -2,7 +2,7 @@ node_modules
 # thats yk node modules
 .env
 # make it on your own ^ 
-.package-lock.json
+package-lock.json
 ## yea uh
 database
 # those are db files automated
