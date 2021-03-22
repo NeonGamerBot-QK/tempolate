@@ -4,3 +4,6 @@ node_modules
 # make it on your own ^ 
 .package-lock.json
 ## yea uh
+database
+json.squlite
+# those are db files automated
