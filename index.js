@@ -40,6 +40,7 @@ bot.command({
     Embed Links: $replaceText[$replaceText[$checkCondition[$hasPerms[$clientID;embedlinks]==true];true;✅];false;❌]
     admin : $replaceText[$replaceText[$checkCondition[$hasPerms[$clientID;admin==true];true;✅];false;❌]`
 })
+require('./mod')(bot);
 bot.command({
     name: "funcs",
     code: `$author[$jsonRequest[https://dbdjs.leref.ga/functions/$noMentionMessage;description;{author:Failed rendering.}]$jsonRequest[https://dbdjs.leref.ga/functions/$noMentionMessage;message]]
@@ -62,7 +63,7 @@ bot.command({
   bot.command({
     name: "eval",
     code: `$eval[$message]
-    $onlyif[$getVar[owids];$authorID]==true;]`
+    $onlyif[$getVar[owids];$authorID==true;]`
   });
   bot.variables({
     prem: "false",
