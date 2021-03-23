@@ -85,6 +85,14 @@ module.exports = (bot) => {
         $endif`
     })
     
-     
+     bot.command({
+       name: "mod-help",
+       code: `$title[Mod help]
+       $description[
+         \`${config.prefix}warn\` - warns a user! | no more then 10
+         \`${config.prefix}warns <@user>\` gets your warns, if you can **warn people** you can see others
+       ]
+       $color[$getUserVar[color]]`
+     })
 }
 
