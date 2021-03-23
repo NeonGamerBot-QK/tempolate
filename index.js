@@ -38,31 +38,37 @@ bot.command({
     Reactions  : $replaceText[$replaceText[$checkCondition[$hasPerms[$clientID;addreactions]==true];true;✅];false;❌]
     Messages   : $replaceText[$replaceText[$checkCondition[$hasPerms[$clientID;managemessages]==true];true;✅];false;❌]
     Embed Links: $replaceText[$replaceText[$checkCondition[$hasPerms[$clientID;embedlinks]==true];true;✅];false;❌]
-    $replaceText[$replaceText[$checkCondition[$hasPerms[$clientID;admin==true];true;✅];false;❌]`
+    admin : $replaceText[$replaceText[$checkCondition[$hasPerms[$clientID;admin==true];true;✅];false;❌]`
 })
 bot.command({
     name: "funcs",
     code: `$author[$jsonRequest[https://dbdjs.leref.ga/functions/$noMentionMessage;description;{author:Failed rendering.}]$jsonRequest[https://dbdjs.leref.ga/functions/$noMentionMessage;message]]
   $title[$jsonRequest[https://dbdjs.leref.ga/functions/$noMentionMessage;usage;{title:Failed rendering.}]]
-  $color[$getVar[color]]
+  $color[$getUserVar[color]]
   $addTimestamp
   $argsCheck[>1;Functions?]
-  $onlyForIDs[$botOwnerID;]`
+  $onlyif[$getVar[owids];$authorID]==true;]`
   });
 
   
 bot.command({
     name: "reboot",
-    code: `$reboot[server.js] //<- Change this, if was different//
+    code: `$reboot //<- Change this, if was different//
   $wait[500ms]
   $sendMessage[Rebooting.. {edit:200ms:{Turning off..}};no]
-  $onlyForIDs[$botOwnerID;]`
+  $onlyif[$getVar[owids];$authorID]==true;]`
   });
   
   bot.command({
     name: "eval",
     code: `$eval[$message]
-  $onlyForIDs[$botOwnerID;]`
+    $onlyif[$getVar[owids];$authorID]==true;]`
   });
-  
+  bot.variables({
+    prem: "false",
+    adlink: "discord.gg/somecode",
+    adname: "Made by bots/sites",
+    owids: "",
+    color: "RANDOM",
+  })
 require('./music.js')(bot);
